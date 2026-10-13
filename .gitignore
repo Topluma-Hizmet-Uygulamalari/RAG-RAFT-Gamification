@@ -1,0 +1,2 @@
+# Kişisel Claude Code izin/ayar dosyaları (her ekip üyesinin kendi makinesinde kalır)
+.claude/settings.local.json
