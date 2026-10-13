@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analog Kart Seti</title>
+<style>
+  :root {
+    --mavi: #2563ab;
+    --mavi-acik: #e8f1fb;
+    --turuncu: #e8762d;
+    --sari: #f7c948;
+    --murekkep: #27323f;
+    --gri: #6b7684;
+    --cizgi: #9aa6b2;
+    --kagit: #ffffff;
+    --zemin: #eef2f6;
+    --kirmizi: #c0392b;
+    --yesil: #1e7a4f;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 24px 16px 64px;
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--zemin);
+    color: var(--murekkep);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .sayfa {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--kagit);
+    padding: 28px 32px;
+    box-shadow: 0 2px 14px rgba(39, 50, 63, 0.14);
+    border-radius: 6px;
+  }
+
+  h1 {
+    font-size: 26px;
+    margin: 0 0 4px;
+    color: var(--mavi);
+  }
+  .altbaslik {
+    margin: 0 0 20px;
+    color: var(--gri);
+    font-style: italic;
+  }
+
+  /* ── Kullanım yönergesi ── */
+  .yonerge {
+    background: var(--mavi-acik);
+    border-left: 5px solid var(--mavi);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-bottom: 26px;
+  }
+  .yonerge h2 { margin: 0 0 8px; font-size: 17px; color: var(--mavi); }
+  .yonerge ol { margin: 0; padding-left: 20px; }
+  .yonerge li { margin-bottom: 5px; }
+
+  .yazdir-btn {
+    display: inline-block;
+    margin: 4px 0 26px;
+    padding: 10px 22px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #fff;
+    background: var(--turuncu);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .yazdir-btn:hover { filter: brightness(1.08); }
+
+  /* ── Soru bölümleri ── */
+  .soru-bolumu { margin-bottom: 34px; }
+
+  .kart {
+    border: 2px dashed var(--cizgi);
+    border-radius: 10px;
+    padding: 14px 16px 12px;
+    position: relative;
+    background: var(--kagit);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .kart .kod {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--gri);
+    letter-spacing: 1px;
+  }
+  .kart .makas {
+    position: absolute;
+    top: -11px;
+    left: 14px;
+    background: var(--kagit);
+    padding: 0 5px;
+    font-size: 13px;
+    color: var(--gri);
+  }
+
+  /* Soru kartı */
+  .soru-karti {
+    border-color: var(--mavi);
+    background: var(--mavi-acik);
+    margin-bottom: 14px;
+  }
+  .soru-karti .etiket {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--mavi);
+    text-transform: uppercase;
+    margin: 0 0 6px;
+  }
+  .soru-karti .soru-metni {
+    font-size: 19px;
+    font-weight: bold;
+    margin: 0 0 8px;
+  }
+  .soru-karti .not {
+    font-size: 13px;
+    color: var(--gri);
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* Bilgi kartları ızgarası */
+  .bilgi-izgara {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 560px) {
+    .bilgi-izgara { grid-template-columns: 1fr; }
+  }
+
+  .bilgi-karti .kart-baslik {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 2px 60px 6px 0;
+    color: var(--murekkep);
+  }
+  .bilgi-karti .kart-metin { margin: 0; }
+
+  /* ── Cevap anahtarı ── */
+  .cevap-anahtari {
+    page-break-before: always;
+    break-before: page;
+    border-top: 4px double var(--kirmizi);
+    margin-top: 40px;
+    padding-top: 18px;
+  }
+  .cevap-anahtari h2 {
+    color: var(--kirmizi);
+    font-size: 20px;
+    margin: 0 0 2px;
+  }
+  .cevap-anahtari .uyari {
+    color: var(--kirmizi);
+    font-weight: bold;
+    font-size: 13px;
+    margin: 0 0 18px;
+  }
+  .anahtar-soru {
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .anahtar-soru h3 { font-size: 16px; margin: 0 0 4px; }
+  .dogru-hamle {
+    margin: 0 0 10px;
+    padding: 6px 10px;
+    background: #e9f6ef;
+    border-left: 4px solid var(--yesil);
+    font-size: 14px;
+  }
+  .dogru-hamle strong { color: var(--yesil); }
+
+  table.anahtar {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.anahtar th, table.anahtar td {
+    border: 1px solid var(--cizgi);
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.anahtar th { background: var(--mavi-acik); }
+  td.kod-hucre { font-family: "Courier New", monospace; font-weight: bold; white-space: nowrap; }
+  .tur { font-weight: bold; white-space: nowrap; }
+  .tur-correct  { color: var(--yesil); }
+  .tur-distractor { color: var(--turuncu); }
+  .tur-irrelevant { color: var(--gri); }
+  .tur-outdated { color: var(--kirmizi); }
+
+  .hata-mesaji {
+    padding: 16px;
+    background: #fdecea;
+    border: 2px solid var(--kirmizi);
+    border-radius: 6px;
+    color: var(--kirmizi);
+    font-weight: bold;
+  }
+
+  /* ── Yazdırma ── */
+  @page { size: A4; margin: 12mm; }
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12.5px; }
+    .sayfa {
+      max-width: none;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
+    }
+    .yazdir-btn { display: none; }
+    .yonerge { page-break-inside: avoid; break-inside: avoid; }
+    .soru-bolumu { page-break-inside: avoid; break-inside: avoid; margin-bottom: 24px; }
+    .kart { border-width: 1.5px; }
+    .soru-karti .soru-metni { font-size: 16px; }
+    .bilgi-karti .kart-baslik { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="sayfa">
+  <h1>Kütüphaneci Robot — Analog Kart Seti</h1>
+  <p class="altbaslik">Atölyenin kâğıt-kalem açılışı: Elektrik de internet de gerekmez.</p>
+
+  <div class="yonerge">
+    <h2>Nasıl kullanılır?</h2>
+    <ol>
+      <li><strong>Yazdırın</strong> ve kartları kesme çizgilerinden <strong>kesin</strong>. Son sayfadaki cevap anahtarını öğrencilere göstermeyin!</li>
+      <li>Bir öğrenci <strong>Robot</strong>, bir öğrenci <strong>Kütüphaneci</strong> seçin. Robot yalnızca eline verilen karttaki bilgiyle konuşabilir — kart yoksa susar!</li>
+      <li>Soru kartını sınıfa okuyun. Kütüphaneci, bilgi kartlarından <strong>en fazla 1 tanesini</strong> Robot'a verir.</li>
+      <li>Robot, cevap anahtarındaki cevabı <strong>kendinden emin bir sesle</strong> okur — yanlış kartta bile! Unutmayın: Emin görünmek, doğru olmak değildir.</li>
+      <li>Dikkat: Bazı sorularda cevap kartların <strong>hiçbirinde yoktur</strong>. Kütüphaneci isterse hiç kart vermez ve "Robot, bilmiyorum de!" der — bazen en doğru hamle budur.</li>
+    </ol>
+  </div>
+
+  <button class="yazdir-btn" onclick="window.print()">🖨 Yazdır</button>
+
+  <div id="icerik"></div>
+</div>
+
+<script src="js/content.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var kok = document.getElementById("icerik");
+
+  if (!window.CONTENT || !window.CONTENT.levels) {
+    var hata = document.createElement("p");
+    hata.className = "hata-mesaji";
+    hata.textContent = "İçerik yüklenemedi. Bu dosyayı app/ klasörünün içinden açtığınızdan emin olun (js/content.js bulunamadı).";
+    kok.appendChild(hata);
+    return;
+  }
+
+  // Seviye 1-3'ten seçilen 6 soru (seviye başına 2)
+  var SECILI = ["l1q1", "l1q2", "l2q1", "l2q3", "l3q1", "l3q3"];
+
+  var TUR_AD = {
+    correct: "DOĞRU KAYNAK",
+    distractor: "ÇELDİRİCİ (ilgili görünür, cevabı yok)",
+    irrelevant: "ALAKASIZ",
+    outdated: "ESKİ BİLGİ"
+  };
+
+  // Soruları ve ait oldukları seviye mekaniklerini topla
+  var sorular = [];
+  window.CONTENT.levels.forEach(function (seviye) {
+    seviye.questions.forEach(function (soru) {
+      if (SECILI.indexOf(soru.id) !== -1) {
+        sorular.push({ soru: soru, mekanik: seviye.mechanics });
+      }
+    });
+  });
+  // SECILI sırasına diz
+  sorular.sort(function (a, b) {
+    return SECILI.indexOf(a.soru.id) - SECILI.indexOf(b.soru.id);
+  });
+
+  // Deterministik karıştırma: her yüklemede aynı sonuç (kart harfi türü ele vermesin)
+  function karistir(dizi, tohum) {
+    var kopya = dizi.slice();
+    var t = tohum;
+    for (var i = kopya.length - 1; i > 0; i--) {
+      t = (t * 1103515245 + 12345) % 2147483648;
+      var j = t % (i + 1);
+      var gecici = kopya[i];
+      kopya[i] = kopya[j];
+      kopya[j] = gecici;
+    }
+    return kopya;
+  }
+
+  var HARFLER = "ABCDEFGH";
+
+  function el(etiket, sinif, metin) {
+    var e = document.createElement(etiket);
+    if (sinif) e.className = sinif;
+    if (metin) e.textContent = metin;
+    return e;
+  }
+
+  var anahtarVerisi = []; // cevap anahtarı için biriktir
+
+  sorular.forEach(function (kayit, indeks) {
+    var soru = kayit.soru;
+    var mekanik = kayit.mekanik;
+    var kodNo = "S" + (indeks + 1);
+
+    var bolum = el("section", "soru-bolumu");
+
+    // ── Soru kartı ──
+    var soruKarti = el("div", "kart soru-karti");
+    soruKarti.appendChild(el("span", "makas", "✂"));
+    soruKarti.appendChild(el("span", "kod", kodNo));
+    soruKarti.appendChild(el("p", "etiket", "Soru Kartı · " + kodNo));
+    soruKarti.appendChild(el("p", "soru-metni", soru.question));
+    soruKarti.appendChild(el("p", "not",
+      "Kütüphaneci: Bu sorunun bilgi kartlarından en fazla 1 tanesini Robot'a ver — ya da hiç verme ve \"Bilmiyorum de!\" de."));
+    bolum.appendChild(soruKarti);
+
+    // ── Bilgi kartları (karıştırılmış) ──
+    var karisik = karistir(soru.cards, indeks + 7);
+    var izgara = el("div", "bilgi-izgara");
+    var anahtarKartlari = [];
+
+    karisik.forEach(function (kart, k) {
+      var kartKodu = kodNo + "-" + HARFLER.charAt(k);
+      var kutu = el("div", "kart bilgi-karti");
+      kutu.appendChild(el("span", "makas", "✂"));
+      kutu.appendChild(el("span", "kod", kartKodu));
+      kutu.appendChild(el("p", "kart-baslik", kart.title));
+      kutu.appendChild(el("p", "kart-metin", kart.text));
+      izgara.appendChild(kutu);
+
+      // Robot'un bu kartla vereceği cevap
+      var robotCevabi;
+      if (kart.answerKey === "correct") {
+        robotCevabi = soru.answers.correct;
+      } else {
+        robotCevabi = kart.answer || soru.answers[kart.answerKey] || "";
+      }
+      anahtarKartlari.push({
+        kod: kartKodu,
+        baslik: kart.title,
+        tur: kart.kind,
+        cevap: robotCevabi
+      });
+    });
+    bolum.appendChild(izgara);
+    kok.appendChild(bolum);
+
+    anahtarVerisi.push({
+      kodNo: kodNo,
+      soru: soru,
+      mekanik: mekanik,
+      kartlar: anahtarKartlari
+    });
+  });
+
+  // ── Öğretmen cevap anahtarı (ayrı sayfa) ──
+  var anahtar = el("section", "cevap-anahtari");
+  anahtar.appendChild(el("h2", null, "Öğretmen Cevap Anahtarı"));
+  anahtar.appendChild(el("p", "uyari",
+    "⚠ Bu sayfa yalnızca öğretmen içindir — öğrencilere göstermeyin, ayrı tutun. Robot rolündeki öğrenciye cevapları buradan fısıldayın ya da bu sayfayı yalnızca ona verin."));
+
+  anahtarVerisi.forEach(function (veri) {
+    var kutu = el("div", "anahtar-soru");
+    kutu.appendChild(el("h3", null, veri.kodNo + " — " + veri.soru.question));
+
+    var hamle = el("p", "dogru-hamle");
+    var kalin = el("strong");
+    if (veri.mekanik.hasCorrect) {
+      var dogruKart = veri.kartlar.filter(function (x) { return x.tur === "correct"; })[0];
+      kalin.textContent = "Doğru hamle: " + (dogruKart ? dogruKart.kod : "?") + " kartını vermek.";
+      hamle.appendChild(kalin);
+      hamle.appendChild(document.createTextNode(" Robot'un doğru cevabı: “" + veri.soru.answers.correct + "”"));
+    } else {
+      kalin.textContent = "Doğru hamle: HİÇ kart vermemek — “Bilmiyorum de!”";
+      hamle.appendChild(kalin);
+      hamle.appendChild(document.createTextNode(" Robot'un dürüst cevabı: “" + veri.soru.answers.idk + "”"));
+    }
+    kutu.appendChild(hamle);
+
+    var tablo = el("table", "anahtar");
+    var baslikSatiri = el("tr");
+    ["Kod", "Kart", "Türü", "Robot bu kartla ne der?"].forEach(function (b) {
+      baslikSatiri.appendChild(el("th", null, b));
+    });
+    tablo.appendChild(baslikSatiri);
+
+    veri.kartlar.forEach(function (kart) {
+      var satir = el("tr");
+      satir.appendChild(el("td", "kod-hucre", kart.kod));
+      satir.appendChild(el("td", null, kart.baslik));
+      satir.appendChild(el("td", "tur tur-" + kart.tur, TUR_AD[kart.tur] || kart.tur));
+      satir.appendChild(el("td", null, kart.cevap));
+      tablo.appendChild(satir);
+    });
+    kutu.appendChild(tablo);
+    anahtar.appendChild(kutu);
+  });
+
+  kok.appendChild(anahtar);
+})();
+</script>
+</body>
+</html>

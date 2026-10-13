@@ -1,0 +1,284 @@
+/* Öğretmen paneli — sade, aydınlık, tek tema */
+
+:root {
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --border: rgba(11, 11, 11, 0.10);
+  --track: #e1e0d9;
+  --accent: #2a78d6;
+  --accent-dark: #1c5cab;
+  --series-err: #2a78d6;
+  --series-idk: #1baf7a;
+  --danger: #d03b3b;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 16px; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+.hidden { display: none !important; }
+
+.muted { color: var(--ink-2); }
+
+h1 { font-size: 1.5rem; margin: 0 0 0.5rem; }
+h2 { font-size: 1.1rem; margin: 0 0 0.75rem; }
+
+/* Üst bar */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.75rem 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand { margin: 0; font-weight: 700; }
+.topbar-user { display: flex; align-items: center; gap: 0.75rem; }
+.user-email { color: var(--ink-2); font-size: 0.9rem; word-break: break-all; }
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.25rem 16px 3rem;
+}
+
+/* Paneller ve bildirimler */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.notice {
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+.notice-error {
+  background: #fdf0f0;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+}
+
+.form-msg { min-height: 1.4em; margin: 0.5rem 0; color: var(--ink-2); }
+.form-msg.error { color: var(--danger); }
+.form-msg.ok { color: #006300; }
+
+/* Butonlar */
+.btn {
+  font: inherit;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  min-height: 44px;
+}
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--accent-dark); }
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--border);
+}
+.btn-secondary:hover:not(:disabled) { border-color: var(--ink-2); }
+.btn-ghost { background: transparent; color: var(--ink-2); }
+.btn-ghost:hover:not(:disabled) { color: var(--ink); }
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.btn-danger:hover:not(:disabled) { background: #fdf0f0; }
+.btn-back { margin-bottom: 0.75rem; padding-left: 0; }
+
+/* Giriş kartı */
+.auth-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  max-width: 420px;
+  margin: 2rem auto 0;
+}
+.auth-card label { display: block; margin: 0.75rem 0 0.25rem; font-weight: 600; }
+.auth-card input,
+.create-form input {
+  width: 100%;
+  font: inherit;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+}
+.auth-card input:focus,
+.create-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.auth-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+
+/* Sınıf oluşturma ve listesi */
+.create-form {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1rem 0 0.25rem;
+  flex-wrap: wrap;
+}
+.create-form input { flex: 1 1 220px; }
+
+.class-list { display: grid; gap: 0.75rem; }
+.class-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.class-card-info { min-width: 0; }
+.class-card-name { font-weight: 700; font-size: 1.05rem; margin: 0; overflow-wrap: anywhere; }
+.class-card-date { color: var(--muted); font-size: 0.85rem; margin: 0.15rem 0 0; }
+.class-card-code {
+  font-family: ui-monospace, Consolas, monospace;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  color: var(--accent-dark);
+}
+.class-card-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* Pano başlığı ve sınıf kodu */
+.dash-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.dash-head h1 { margin: 0; overflow-wrap: anywhere; }
+.join-code-box { display: flex; flex-direction: column; align-items: flex-start; }
+.join-code-label { color: var(--muted); font-size: 0.85rem; }
+.join-code-big {
+  font-family: ui-monospace, Consolas, monospace;
+  font-weight: 800;
+  font-size: clamp(2rem, 7vw, 3.25rem);
+  letter-spacing: 0.18em;
+  color: var(--accent-dark);
+  line-height: 1.1;
+}
+
+/* Özet kartları */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.stat-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+}
+.stat-label { color: var(--ink-2); font-size: 0.85rem; margin: 0; }
+.stat-value { font-size: 1.9rem; font-weight: 700; margin: 0.1rem 0 0; }
+
+/* Grafikler (saf CSS yatay barlar) */
+.charts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 0;
+}
+@media (min-width: 760px) {
+  .charts { grid-template-columns: 1fr 1fr; }
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.55rem 0;
+}
+.bar-label { color: var(--ink-2); font-size: 0.9rem; }
+.bar-track {
+  background: var(--track);
+  border-radius: 4px;
+  height: 16px;
+  position: relative;
+}
+.bar-fill {
+  height: 16px;
+  border-radius: 0 4px 4px 0;
+  transition: width 0.3s ease;
+}
+.bar-fill.err { background: var(--series-err); }
+.bar-fill.idk { background: var(--series-idk); }
+.bar-value {
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-fill { transition: none; }
+}
+
+.empty-msg { color: var(--muted); margin: 0.5rem 0; }
+
+/* Tablolar */
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+th { color: var(--ink-2); font-weight: 600; white-space: nowrap; }
+td.num { font-variant-numeric: tabular-nums; }
+.card-id {
+  font-family: ui-monospace, Consolas, monospace;
+  background: var(--page);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.85rem;
+}
+.status-done { color: #006300; font-weight: 600; }
+.status-open { color: var(--muted); }
+
+@media (max-width: 480px) {
+  .topbar-inner { flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+  .auth-card { margin-top: 1rem; padding: 1.1rem; }
+}

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dedektif Sertifikası</title>
+<style>
+  :root {
+    --lacivert: #1f4e79;
+    --mavi: #3a7bd5;
+    --mavi-acik: #eaf3fc;
+    --turuncu: #f08a3c;
+    --sari: #f7c948;
+    --murekkep: #27323f;
+    --gri: #6b7684;
+    --kagit: #fffdf7;
+    --zemin: #dfe7ee;
+    --cerceve: #2563ab;
+    --cam: #bfe3f2;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 28px 16px;
+    background: var(--zemin);
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--murekkep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .yazdir-btn {
+    margin-bottom: 20px;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #fff;
+    background: var(--turuncu);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .yazdir-btn:hover { filter: brightness(1.08); }
+
+  /* ── Sertifika: A4 yatay ── */
+  .sertifika {
+    width: 277mm;
+    height: 190mm;
+    max-width: 100%;
+    background: var(--kagit);
+    border: 4px solid var(--cerceve);
+    border-radius: 14px;
+    box-shadow: 0 4px 22px rgba(39, 50, 63, 0.22);
+    position: relative;
+    overflow: hidden;
+    padding: 10mm 14mm;
+    display: flex;
+    flex-direction: column;
+  }
+  .ic-cerceve {
+    position: absolute;
+    inset: 4mm;
+    border: 1.5px dashed var(--mavi);
+    border-radius: 10px;
+    pointer-events: none;
+  }
+
+  /* köşe süsleri */
+  .kose {
+    position: absolute;
+    font-size: 26px;
+    color: var(--sari);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.08);
+  }
+  .kose.sol-ust  { top: 7mm;   left: 8mm; }
+  .kose.sag-ust  { top: 7mm;   right: 8mm; }
+  .kose.sol-alt  { bottom: 7mm; left: 8mm; }
+  .kose.sag-alt  { bottom: 7mm; right: 8mm; }
+
+  /* ── Üst bölüm ── */
+  .ust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10mm;
+    margin-top: 2mm;
+  }
+  .ust svg { flex: 0 0 auto; }
+  .baslik-kutu { text-align: center; }
+  .mini-baslik {
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gri);
+  }
+  h1 {
+    margin: 2px 0 0;
+    font-size: 44px;
+    line-height: 1.1;
+    color: var(--lacivert);
+    letter-spacing: 1px;
+  }
+  .rozet-cizgi {
+    width: 70mm;
+    height: 3px;
+    margin: 4mm auto 0;
+    background: linear-gradient(90deg, transparent, var(--turuncu), transparent);
+    border-radius: 2px;
+  }
+
+  /* ── Orta bölüm ── */
+  .orta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .takdim {
+    margin: 0 0 2mm;
+    font-size: 19px;
+    color: var(--gri);
+    font-style: italic;
+  }
+  .ad-cizgisi {
+    width: 150mm;
+    border-bottom: 2.5px solid var(--murekkep);
+    height: 14mm;
+    margin-bottom: 2mm;
+  }
+  .ad-aciklama {
+    margin: 0 0 6mm;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gri);
+  }
+  .metin {
+    margin: 0;
+    max-width: 200mm;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .metin strong { color: var(--lacivert); }
+
+  /* ── Tarih / okul satırı ── */
+  .alt-satir {
+    display: flex;
+    justify-content: center;
+    gap: 30mm;
+    margin: 6mm 0 4mm;
+  }
+  .alan { text-align: center; }
+  .alan .cizgi {
+    width: 60mm;
+    border-bottom: 1.5px solid var(--murekkep);
+    height: 8mm;
+  }
+  .alan .ad {
+    margin: 1.5mm 0 0;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gri);
+  }
+
+  /* ── Ders şeridi ── */
+  .ders {
+    margin: 0 auto;
+    padding: 3mm 10mm;
+    background: var(--mavi-acik);
+    border: 1.5px solid var(--mavi);
+    border-radius: 999px;
+    font-size: 16.5px;
+    font-weight: bold;
+    color: var(--lacivert);
+    text-align: center;
+    max-width: 230mm;
+  }
+
+  /* ── Ekran önizleme ── */
+  @media screen and (max-width: 1100px) {
+    .sertifika {
+      width: 100%;
+      height: auto;
+      min-height: 480px;
+      padding: 18px 20px;
+    }
+    h1 { font-size: 30px; }
+    .ad-cizgisi { width: 80%; }
+    .ust { gap: 16px; flex-wrap: wrap; }
+    .alt-satir { gap: 24px; flex-wrap: wrap; }
+    .alan .cizgi { width: 140px; }
+  }
+
+  /* ── Yazdırma: tek A4 yatay sayfa ── */
+  @page { size: A4 landscape; margin: 10mm; }
+  @media print {
+    body { background: #fff; padding: 0; display: block; }
+    .yazdir-btn { display: none; }
+    .sertifika {
+      width: 277mm;
+      height: 190mm;
+      max-width: none;
+      margin: 0 auto;
+      box-shadow: none;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<button class="yazdir-btn" onclick="window.print()">🖨 Yazdır (A4 yatay)</button>
+
+<div class="sertifika">
+  <div class="ic-cerceve"></div>
+  <span class="kose sol-ust">★</span>
+  <span class="kose sag-ust">★</span>
+  <span class="kose sol-alt">★</span>
+  <span class="kose sag-alt">★</span>
+
+  <div class="ust">
+    <!-- Robot -->
+    <svg width="120" height="130" viewBox="0 0 120 130" role="img" aria-label="Kütüphaneci Robot">
+      <!-- anten -->
+      <line x1="60" y1="18" x2="60" y2="30" stroke="var(--gri)" stroke-width="3"/>
+      <circle cx="60" cy="13" r="6" fill="var(--turuncu)"/>
+      <!-- kafa -->
+      <rect x="28" y="30" width="64" height="48" rx="12" fill="var(--mavi)"/>
+      <rect x="36" y="38" width="48" height="32" rx="8" fill="#ffffff"/>
+      <!-- gözler + gülümseme -->
+      <circle cx="51" cy="52" r="5.5" fill="var(--lacivert)"/>
+      <circle cx="69" cy="52" r="5.5" fill="var(--lacivert)"/>
+      <circle cx="53" cy="50" r="1.8" fill="#ffffff"/>
+      <circle cx="71" cy="50" r="1.8" fill="#ffffff"/>
+      <path d="M50 61 Q60 68 70 61" stroke="var(--lacivert)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- kulaklar -->
+      <rect x="20" y="46" width="8" height="16" rx="4" fill="var(--turuncu)"/>
+      <rect x="92" y="46" width="8" height="16" rx="4" fill="var(--turuncu)"/>
+      <!-- gövde -->
+      <rect x="36" y="82" width="48" height="36" rx="10" fill="var(--mavi)"/>
+      <circle cx="60" cy="96" r="7" fill="var(--sari)"/>
+      <rect x="50" y="107" width="20" height="5" rx="2.5" fill="#ffffff" opacity="0.7"/>
+      <!-- kollar -->
+      <rect x="24" y="86" width="10" height="24" rx="5" fill="var(--turuncu)"/>
+      <rect x="86" y="86" width="10" height="24" rx="5" fill="var(--turuncu)"/>
+    </svg>
+
+    <div class="baslik-kutu">
+      <p class="mini-baslik">Kütüphaneci Robot Atölyesi</p>
+      <h1>YAPAY ZEKÂ DEDEKTİFİ<br>SERTİFİKASI</h1>
+      <div class="rozet-cizgi"></div>
+    </div>
+
+    <!-- Büyüteç -->
+    <svg width="110" height="130" viewBox="0 0 110 130" role="img" aria-label="Dedektif büyüteci">
+      <circle cx="48" cy="48" r="32" fill="var(--cam)" stroke="var(--lacivert)" stroke-width="7"/>
+      <path d="M30 38 Q40 26 54 28" stroke="#ffffff" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.85"/>
+      <rect x="66" y="70" width="14" height="48" rx="7" fill="var(--turuncu)" transform="rotate(-45 73 94)"/>
+      <!-- camın içinde onay işareti -->
+      <path d="M36 50 L45 59 L62 38" stroke="var(--lacivert)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="18" cy="100" r="4" fill="var(--sari)"/>
+      <circle cx="96" cy="22" r="4" fill="var(--sari)"/>
+    </svg>
+  </div>
+
+  <div class="orta">
+    <p class="takdim">Bu sertifika,</p>
+    <div class="ad-cizgisi"></div>
+    <p class="ad-aciklama">Ad — Soyad</p>
+    <p class="metin">
+      adlı dedektifin <strong>Kütüphaneci Robot</strong> atölyesini başarıyla tamamladığını;
+      robotlara doğru kaynağı vermeyi, çeldiricilere kanmamayı ve gerektiğinde
+      <strong>"Bilmiyorum"</strong> demenin de bir başarı olduğunu öğrendiğini belgelemek için verilmiştir.
+    </p>
+  </div>
+
+  <div class="alt-satir">
+    <div class="alan">
+      <div class="cizgi"></div>
+      <p class="ad">Tarih</p>
+    </div>
+    <div class="alan">
+      <div class="cizgi"></div>
+      <p class="ad">Okul</p>
+    </div>
+  </div>
+
+  <p class="ders">Emin görünmek, doğru olmak değildir — kaynağını kontrol et!</p>
+</div>
+
+</body>
+</html>

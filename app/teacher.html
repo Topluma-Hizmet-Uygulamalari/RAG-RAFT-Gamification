@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Öğretmen Paneli — Kütüphaneci Robot</title>
+  <link rel="stylesheet" href="css/teacher.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js" integrity="sha384-2zrRDgDHSYB/GN3nFW3fsZXoxEhKIr3N2h63Tc6DEOB9JJdFIu8xMJT2Cph/gBil" crossorigin="anonymous"></script>
+  <script defer src="js/supabase-config.js"></script>
+  <script defer src="js/teacher.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <p class="brand">Kütüphaneci Robot · Öğretmen Paneli</p>
+      <div class="topbar-user hidden" id="topbar-user">
+        <span id="user-email" class="user-email"></span>
+        <button id="btn-logout" class="btn btn-ghost" type="button">Çıkış Yap</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="global-error" class="notice notice-error hidden" role="alert"></section>
+
+    <!-- Giriş / Kayıt -->
+    <section id="view-auth" class="view hidden" aria-label="Giriş ve kayıt">
+      <div class="auth-card">
+        <h1>Öğretmen Girişi</h1>
+        <p class="muted">Sınıflarınızı yönetmek ve oyun sonuçlarını görmek için giriş yapın. Hesabınız yoksa aynı bilgilerle kayıt olabilirsiniz.</p>
+        <form id="auth-form" novalidate>
+          <label for="auth-email">E-posta</label>
+          <input id="auth-email" type="email" autocomplete="email" required>
+          <label for="auth-password">Şifre</label>
+          <input id="auth-password" type="password" autocomplete="current-password" minlength="6" required>
+          <div class="auth-actions">
+            <button type="submit" id="btn-login" class="btn btn-primary">Giriş Yap</button>
+            <button type="button" id="btn-signup" class="btn btn-secondary">Kayıt Ol</button>
+          </div>
+        </form>
+        <p id="auth-msg" class="form-msg" role="status"></p>
+      </div>
+    </section>
+
+    <!-- Sınıflarım -->
+    <section id="view-classes" class="view hidden" aria-label="Sınıflarım">
+      <h1>Sınıflarım</h1>
+      <form id="create-class-form" class="create-form">
+        <input id="new-class-name" type="text" maxlength="80" placeholder="Sınıf adı (örn. 7-A Fen Bilimleri)" required>
+        <button type="submit" id="btn-create-class" class="btn btn-primary">Sınıf Oluştur</button>
+      </form>
+      <p id="classes-msg" class="form-msg" role="status"></p>
+      <div id="class-list" class="class-list"></div>
+    </section>
+
+    <!-- Pano -->
+    <section id="view-dashboard" class="view hidden" aria-label="Sınıf panosu">
+      <button id="btn-back" class="btn btn-ghost btn-back" type="button">← Sınıflarım</button>
+      <div class="dash-head panel">
+        <h1 id="dash-class-name"></h1>
+        <div class="join-code-box">
+          <span class="join-code-label">Sınıf kodu (tahtaya yazın)</span>
+          <span id="dash-join-code" class="join-code-big"></span>
+        </div>
+      </div>
+      <p id="dash-msg" class="form-msg" role="status"></p>
+
+      <div id="summary-cards" class="summary-cards"></div>
+
+      <div class="charts">
+        <div class="panel">
+          <h2>Seviye başına hata oranı</h2>
+          <div id="chart-errors" class="chart"></div>
+        </div>
+        <div class="panel">
+          <h2>Seviye başına «Bilmiyorum» kullanımı</h2>
+          <div id="chart-idk" class="chart"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>En çok tuzağa düşüren kartlar</h2>
+        <div id="traps"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Oturumlar</h2>
+          <button id="btn-csv" class="btn btn-secondary" type="button">CSV İndir</button>
+        </div>
+        <div id="sessions"></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
